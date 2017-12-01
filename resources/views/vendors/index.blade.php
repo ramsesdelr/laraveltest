@@ -4,22 +4,19 @@
 <div class="container">
 	<div class="row">
 		<table class="table table-responsive">
-			<caption>List of Items</caption>
+			<caption>List of Vendors</caption>
 			<thead>
 				<tr>
 					<th scope="col">ID</th>
 					<th scope="col">Name</th>
-					<th scope="col">Color</th>
-					<th scope="col">Price</th>
 				</tr>
 			</thead>
 			<tbody>
-                @foreach($items as $item)
+                @foreach($vendors as $vendor)
 				<tr>
-					<th scope="row"> {{$item->id}} </th>
-					<td> <a href="items/edit/{{$item->id }}"> {{$item->name}} </a> </td>
-					<td>{{ $item->color }}</td>
-					<td>{{ $item->price }}</td>
+					<th scope="row"> {{$vendor->id}} </th>
+					<td> <a href="vendors/{{$vendor->id }}/edit/"> {{$vendor->name}} </a> </td>
+
 				</tr>
                 @endforeach
 			</tbody>

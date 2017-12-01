@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreItem;
 use App\Items;
+use App\Repositories\ItemsRepository;
 use App\Types;
 use App\User;
 use App\Vendors;
@@ -15,7 +17,7 @@ class ItemsController extends Controller
     protected $user;
     public $vendors, $types;
     /**
-     * Create a new controller instance.Cun
+     * Create a new controller instance
      *
      * @return void
      */
@@ -50,29 +52,15 @@ class ItemsController extends Controller
      *
      * @return void
      */
-    public function store()
+    public function store(StoreItem $request, ItemsRepository $itemsRepo)
     {
-        //let's validate first the form
-        $this->validate(request(), [
-            'name' => 'required',
-            'vendors_id' => 'required',
-            'types_id' => 'required',
-            'sku' => 'required',
-            'release_date' => 'required',
-        ]);
 
-        //we proceed to create the record
-        Items::create([
-            'name' => request('name'),
-            'vendors_id' => request('vendors_id'),
-            'types_id' => request('types_id'),
-            'sku' => request('sku'),
-            'release_date' => request('release_date'),
-            'price' => request('price'),
-            'weight' => request('weight'),
-            'color' => request('color'),
-            'users_id' => $this->user->id,
-        ]);
+        //we proceed to create the record from the repository
+        try {
+            $itemsRepo->create($request);
+        } catch (\Exception $e) {
+            Session::flash('message', $e->getMessage());
+        }
 
         return redirect('/items');
     }
@@ -89,12 +77,13 @@ class ItemsController extends Controller
         $item = Items::find($id);
 
         if ($this->user->can('edit', $item)) {
-            $item = Items::find($id);
-            return view('items.update',
-                ['item' => $item,
-                    'vendors' => $this->vendors,
-                    'types' => $this->types]
-            );
+
+            return view('items.update', [
+                'item' => $item,
+                'vendors' => $this->vendors,
+                'types' => $this->types,
+            ]);
+
         } else {
             return view('404');
         }
@@ -108,31 +97,16 @@ class ItemsController extends Controller
      *
      */
 
-    public function update()
+    public function update(StoreItem $request, ItemsRepository $itemsRepo)
     {
-        $this->validate(request(), [
-            'name' => 'required',
-            'vendors_id' => 'required',
-            'types_id' => 'required',
-            'sku' => 'required',
-            'release_date' => 'required',
-        ]);
 
-        $id = request('id');
-
-        $item = Items::find($id);
-        $item->name = request('name');
-        $item->vendors_id = request('vendors_id');
-        $item->types_id = request('types_id');
-        $item->sku = request('sku');
-        $item->price = request('price');
-        $item->weight = request('weight');
-        $item->color = request('color');
-        $item->release_Date = request('release_date');
-        $item->save();
-
-        Session::flash('message', 'Item succesfully updated!');
-
+        try {
+            $itemsRepo->update(request('id'), $request);
+            Session::flash('message', 'The Item was succesfully updated');
+            
+        } catch (\Exception $e) {
+            Session::flash('message', $e->getMessage());
+        }
         return redirect('/items');
 
     }

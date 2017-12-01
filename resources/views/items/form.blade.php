@@ -8,7 +8,7 @@
              {{ csrf_field() }}
 			<div class="form-group">
 				<label for="exampleFormControlInput1">Name</label>
-				<input type="text" name="name" value="{{$updateData['name']}}" class="form-control" id="exampleFormControlInput1" placeholder="Your product name" required>
+				<input type="text" name="name"  class="form-control" id="exampleFormControlInput1" placeholder="Your product name" required>
 			</div>
 			<div class="form-group">
 				<label for="exampleFormControlSelect1">Vendor</label>
