@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreItem;
+use App\Http\Requests\StoreItemRequest;
 use App\Items;
 use App\Repositories\ItemsRepository;
 use App\Types;
@@ -11,6 +11,7 @@ use App\Vendors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ItemsController extends Controller
 {
@@ -52,16 +53,21 @@ class ItemsController extends Controller
      *
      * @return void
      */
-    public function store(StoreItem $request, ItemsRepository $itemsRepo)
+    public function store(StoreItemRequest $request, ItemsRepository $itemsRepo)
     {
 
         //we proceed to create the record from the repository
         try {
-            $itemsRepo->create($request);
+            $path = null;
+            if ($request->hasFile('photo')) {
+                 $path = $request->file('photo')->store('photo');
+            }
+            $records = array_merge($request->all(), ['users_id'=> $this->user->id,'photo'=>$path]);
+            $itemsRepo->create($records);
         } catch (\Exception $e) {
             Session::flash('message', $e->getMessage());
         }
-
+        
         return redirect('/items');
     }
 
@@ -97,11 +103,17 @@ class ItemsController extends Controller
      *
      */
 
-    public function update(StoreItem $request, ItemsRepository $itemsRepo)
+    public function update(StoreItemRequest $request, ItemsRepository $itemsRepo)
     {
 
         try {
-            $itemsRepo->update(request('id'), $request);
+            $records = $request->all();
+            if ($request->hasFile('photo')) {
+                $path = $request->file('photo')->store('photo');
+                $records = array_merge($request->all(), ['photo'=>$path]);
+            }
+
+            $itemsRepo->update(request('id'), $records);
             Session::flash('message', 'The Item was succesfully updated');
             
         } catch (\Exception $e) {

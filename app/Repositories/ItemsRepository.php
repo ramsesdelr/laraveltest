@@ -3,28 +3,31 @@ namespace App\Repositories;
 use App\Items;
 use Illuminate\Support\Facades\Auth;
 
-class ItemsRepository implements ManageDataRepository
+class ItemsRepository 
 {
-    public function create($request)
-    {   
-        $user = Auth::user();
 
+    public function create(array $request)
+    {   
+
+   
          return Items::create([
-            'name' => request('name'),
-            'vendors_id' => request('vendors_id'),
-            'types_id' => request('types_id'),
-            'sku' => request('sku'),
-            'release_date' => request('release_date'),
-            'price' => request('price'),
-            'weight' => request('weight'),
-            'color' => request('color'),
-            'users_id' => $user->id,
+            'name' => $request['name'],
+            'vendors_id' => $request['vendors_id'],
+            'types_id' => $request['types_id'],
+            'sku' => $request['sku'],
+            'release_date' => $request['release_date'],
+            'price' => $request['price'],
+            'weight' => $request['weight'],
+            'color' => $request['color'],
+            'users_id' => $request['users_id'],
+            'photo' => $request['photo'],
         ]);
     }
-
+    //TODO check this and convert it to an aray
+    
     public function update($id, $request)
     {
-        return Items::find($id)->update($request->all());
+        return Items::find($id)->update($request);
     }
 
     public function getById($id)

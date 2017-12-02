@@ -6,12 +6,15 @@ use App\Http\Requests\Vendors as VendorsRequest;
 use App\Vendors;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Repositories\VendorsRepository;
+use Illuminate\Support\Facades\Storage;
+
 
 class VendorsController extends Controller
 {
 
     protected $user;
-    /**
+    /** 
      * Create a new controller instance
      *
      * @return void
@@ -29,16 +32,23 @@ class VendorsController extends Controller
      * @param $request
      * @return void
      */
-    public function store(VendorsRequest $request)
+    public function store(VendorsRequest $request, VendorsRepository $vendorsRepo)
     {
         try {
-            Vendors::create([
-                'name' => $request->name,
+            $path = null;
+            $records = $request->all();
+            if ($request->hasFile('logo')) {
+                 $path = $request->file('logo')->store('logo/vendors/');
+            }
+            $records = array_merge($request->all(), ['users_id'=> $this->user->id,'logo'=>$path]);
+            $vendorsRepo->create([
+                'name' => $records['name'],
                 'users_id' => $this->user->id,
+                'logo'=> $records['logo'],
             ]);
             return redirect('/vendors');
         } catch (\Exception $e) {
-
+            die($e->getMessage());
             Session::flash('message', $e->getMessage());
             return redirect('/vendors/create');
         }
@@ -50,18 +60,26 @@ class VendorsController extends Controller
      * @param $request
      * @return void
      */
-    public function update(VendorsRequest $request)
+    public function update(VendorsRequest $request,  VendorsRepository $vendorsRepo)
     {
         try {
-            $vendor = Vendors::find($request->id);
-            $vendor->name = $request->name;
-            $vendor->save();
+            $records = $request->all();
+
+            if ($request->hasFile('logo')) {
+                 $path = $request->file('logo')->store('logo/vendors/');
+                 $records = array_merge($request->all(), ['logo'=>$path]);                 
+            }
+            
+            $vendorsRepo->update($request->id, $records);
             Session::flash('message', 'The Item was succesfully updated');
+            return redirect('/vendors');
+            
             
         } catch (\Exception $e) {
             Session::flash('message', $e->getMessage());
+        return redirect('/vendors/'.$request->id.'/edit');
+        
         }
-        return redirect('/vendors');
     }
 
      /**

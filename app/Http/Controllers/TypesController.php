@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\Vendors as VendorsRequest;
 use App\Types;
+use App\Repositories\ItemsPropertiesRepository;
+use App\Repositories\TypesRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
+
 class TypesController extends Controller
 {
     protected $user;
@@ -26,10 +32,10 @@ class TypesController extends Controller
      * @param $request
      * @return void
      */
-    public function store(VendorsRequest $request)
+    public function store(VendorsRequest $request, TypesRepository $typesRepo)
     {
         try {
-            Types::create([
+            $typesRepo->create([
                 'name' => $request->name,
                 'users_id' => $this->user->id,
             ]);
@@ -47,12 +53,10 @@ class TypesController extends Controller
      * @param $request
      * @return void
      */
-    public function update(VendorsRequest $request)
+    public function update(VendorsRequest $request, TypesRepository $typesRepo)
     {
         try {
-            $vendor = Types::find($request->id);
-            $vendor->name = $request->name;
-            $vendor->save();
+            $typesRepo->update($request->id, $request);
             Session::flash('message', 'The Item was succesfully updated');
             
         } catch (\Exception $e) {
@@ -71,9 +75,9 @@ class TypesController extends Controller
         // $item = Vendors::find($id);        
         // if ($this->user->can('eddit', $item)) {
 
-            $vendor = Vendors::find($id);
+            $type = types::find($id);
 
-            return view('vendors.update',compact('vendor'));
+            return view('types.update',compact('type'));
 
         // } else {
         //     return view('404');

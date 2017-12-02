@@ -58,7 +58,7 @@
 			</div>
 			<label class="custom-file">
 				<label for="release_date" class="col-sm-2 col-form-label">Photo</label>
-				<input type="file" id="file" class="custom-file-input">
+				<input type="file" id="file" name="photo" class="custom-file-input">
 				<span class="custom-file-control"></span>
 			</label>
             <input type="hidden" name="id" value="{{ $item->id }}" >

@@ -8,7 +8,7 @@
              {{ csrf_field() }}
 			<div class="form-group">
 				<label for="exampleFormControlInput1">Name</label>
-				<input type="text" name="name"  class="form-control" id="exampleFormControlInput1" placeholder="Your product name" required>
+				<input type="text" name="name"  class="form-control" id="exampleFormControlInput1" placeholder="Your product name">
 			</div>
 			<div class="form-group">
 				<label for="exampleFormControlSelect1">Vendor</label>
@@ -57,7 +57,7 @@
 			</div>
 			<label class="custom-file">
 				<label for="release_date" class="col-sm-2 col-form-label">Photo</label>
-				<input type="file" id="file" class="custom-file-input">
+				<input type="file" id="file" name="photo" class="custom-file-input">
 				<span class="custom-file-control"></span>
 			</label>
            <button type="submit" class="btn btn-primary">Submit</button>
