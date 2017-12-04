@@ -23,6 +23,18 @@ class ItemsRepository
             'photo' => $request['photo'],
         ]);
     }
+
+    /**
+     * Check if the request has an image and proceeds to upload it
+     * @param POST $request 
+     * @return string
+     */
+    public function uploadImage($request)
+    {
+        if ($request->hasFile('photo')) {
+           return  $path = str_replace('public/','', $request->file('photo')->store('public/items'));
+        }
+    }
     //TODO check this and convert it to an aray
     
     public function update($id, $request)

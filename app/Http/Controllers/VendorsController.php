@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Vendors as VendorsRequest;
+use App\Repositories\VendorsRepository;
 use App\Vendors;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Repositories\VendorsRepository;
-use Illuminate\Support\Facades\Storage;
-
 
 class VendorsController extends Controller
 {
 
     protected $user;
-    /** 
+    /**
      * Create a new controller instance
      *
      * @return void
@@ -27,8 +25,8 @@ class VendorsController extends Controller
         });
     }
 
-     /**
-     * Store a new vendor 
+    /**
+     * Store a new vendor
      * @param $request
      * @return void
      */
@@ -37,14 +35,14 @@ class VendorsController extends Controller
         try {
             $path = null;
             $records = $request->all();
-            if ($request->hasFile('logo')) {
-                 $path = $request->file('logo')->store('logo/vendors/');
-            }
-            $records = array_merge($request->all(), ['users_id'=> $this->user->id,'logo'=>$path]);
+
+            $path = $vendorsRepo->uploadImage($request);
+
+            $records = array_merge($request->all(), ['users_id' => $this->user->id, 'logo' => $path]);
             $vendorsRepo->create([
                 'name' => $records['name'],
                 'users_id' => $this->user->id,
-                'logo'=> $records['logo'],
+                'logo' => $records['logo'],
             ]);
             return redirect('/vendors');
         } catch (\Exception $e) {
@@ -54,47 +52,45 @@ class VendorsController extends Controller
         }
 
     }
-    
+
     /**
-     * Update the current vendor 
+     * Update the current vendor
      * @param $request
      * @return void
      */
-    public function update(VendorsRequest $request,  VendorsRepository $vendorsRepo)
+    public function update(VendorsRequest $request, VendorsRepository $vendorsRepo)
     {
         try {
             $records = $request->all();
-
             if ($request->hasFile('logo')) {
-                 $path = $request->file('logo')->store('logo/vendors/');
-                 $records = array_merge($request->all(), ['logo'=>$path]);                 
+                $path = null;
+                $path = $vendorsRepo->uploadImage($request);
+                $records = array_merge($request->all(), ['logo' => $path]);
             }
-            
             $vendorsRepo->update($request->id, $records);
             Session::flash('message', 'The Item was succesfully updated');
             return redirect('/vendors');
-            
-            
+
         } catch (\Exception $e) {
             Session::flash('message', $e->getMessage());
-        return redirect('/vendors/'.$request->id.'/edit');
-        
+            return redirect('/vendors/' . $request->id . '/edit');
+
         }
     }
 
-     /**
-     * Store a new vendor 
+    /**
+     * Store a new vendor
      * @param $id
      * @return array $vendor
      */
     public function edit($id)
     {
-        // $item = Vendors::find($id);        
+        // $item = Vendors::find($id);
         // if ($this->user->can('eddit', $item)) {
 
-            $vendor = Vendors::find($id);
+        $vendor = Vendors::find($id);
 
-            return view('vendors.update',compact('vendor'));
+        return view('vendors.update', compact('vendor'));
 
         // } else {
         //     return view('404');

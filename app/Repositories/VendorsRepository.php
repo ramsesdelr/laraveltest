@@ -17,4 +17,11 @@ class VendorsRepository extends ManageDataRepository {
               ]);
     }
 
+    public function uploadImage($request)
+    {
+        if ($request->hasFile('logo')) {
+           return  $path = str_replace('public/','', $request->file('logo')->store('public/vendors'));
+        }
+    }
+
 }

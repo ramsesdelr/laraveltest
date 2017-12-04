@@ -11,7 +11,6 @@ use App\Vendors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 
 class ItemsController extends Controller
 {
@@ -59,15 +58,14 @@ class ItemsController extends Controller
         //we proceed to create the record from the repository
         try {
             $path = null;
-            if ($request->hasFile('photo')) {
-                 $path = $request->file('photo')->store('photo');
-            }
-            $records = array_merge($request->all(), ['users_id'=> $this->user->id,'photo'=>$path]);
+            $path = $vendorsRepo->uploadImage($request);
+            $records = array_merge($request->all(), ['users_id' => $this->user->id, 'photo' => $path]);
             $itemsRepo->create($records);
+
         } catch (\Exception $e) {
             Session::flash('message', $e->getMessage());
         }
-        
+
         return redirect('/items');
     }
 
@@ -109,13 +107,14 @@ class ItemsController extends Controller
         try {
             $records = $request->all();
             if ($request->hasFile('photo')) {
-                $path = $request->file('photo')->store('photo');
-                $records = array_merge($request->all(), ['photo'=>$path]);
+                $path = null;
+                $path = $itemsRepo->uploadImage($request);
+                $records = array_merge($request->all(), ['photo' => $path]);
             }
-
+            
             $itemsRepo->update(request('id'), $records);
             Session::flash('message', 'The Item was succesfully updated');
-            
+
         } catch (\Exception $e) {
             Session::flash('message', $e->getMessage());
         }
