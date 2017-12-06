@@ -25,7 +25,7 @@
 					<th scope="row"> {{$user->id}} </th>
 					<td> <a href="users/{{$user->id }}/edit/"> {{$user->name}} </a> </td>
 					<td>  {{$user->email}} </td>
-					<td>  {{$user->is_admin}} </td>
+					<td>  <a  onclick="updateRole({{$user->id}})"> {{$user->is_admin}} </a> </td>
 					<td>  {{$user->is_active}} </td>
 				</tr>
                 @endforeach
@@ -34,3 +34,4 @@
 	</div>
 </div>
 @endsection;
+

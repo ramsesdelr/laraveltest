@@ -76,5 +76,18 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        function updateRole(userId){
+           axios.post('/users/update-role', {
+                user_id: userId
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+        });
+        }
+    </script>
 </body>
 </html>

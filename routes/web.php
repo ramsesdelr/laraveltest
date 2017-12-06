@@ -83,3 +83,5 @@ Route::get('/users', function () {
     return view('users.index', compact('users'));
 
 })->name('users-list')->middleware('check-is-admin');
+
+Route::post('/users/update-role', 'UserController@updateRole')->middleware('check-is-admin');
