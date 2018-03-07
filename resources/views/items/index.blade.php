@@ -7,7 +7,7 @@
 	</div>
 	@endif
 	<div class="row">
-		<table class="table table-responsive">
+		<table class="table table-responsive" id="example">
 			<caption>List of Items</caption>
 			<thead>
 				<tr>
@@ -35,7 +35,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{$items->links()}}
+		{{--  {{$items->links()}}  --}}
 	</div>
 </div>
 @endsection;

@@ -73,21 +73,54 @@
 
         @yield('content')
     </div>
-
-    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+   <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js">
+	</script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js">
+	</script>
+    
     <script>
         function updateRole(userId){
            axios.post('/users/update-role', {
                 user_id: userId
             })
             .then(function (response) {
-                console.log(response);
+
+                if(response.data.response.is_admin == 1) {
+                     $('#user-role-'+ userId).html('Admin'); 
+                } else {
+                     $('#user-role-'+ userId).html('Client');
+                } 
             })
             .catch(function (error) {
                 console.log(error);
         });
         }
+
+         function updateIsActive(userId){
+           axios.post('/users/update-is-active', {
+                user_id: userId
+            })
+            .then(function (response) {
+
+                if(response.data.response.is_active == 1) {
+                     $('#user-active-'+ userId).html('Active'); 
+                } else {
+                     $('#user-active-'+ userId).html('Inactive');
+                } 
+            })
+            .catch(function (error) {
+                console.log(error);
+        });
+        }
+
+        $(document).ready(function() {
+         
+             $('#example').DataTable();
+            });
     </script>
 </body>
 </html>

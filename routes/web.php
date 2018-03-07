@@ -26,9 +26,9 @@ Route::get('/items', function () {
     $user = Auth::user();
 
     if ($user->is_admin == 1) {
-        $items = Items::all()->paginate(10);
+        $items = \App\Items::all();
     } else {
-        $items = \App\User::find($user->id)->items()->paginate(10);
+        $items = \App\User::find($user->id)->items();
     }
 
     return view('items.index', compact('items'));
@@ -42,10 +42,10 @@ Route::post('/items/update', 'ItemsController@update');
 Route::get('/vendors', function () {
     $user = Auth::user();
     if ($user->is_admin == 1) {
-        $vendors = \App\Vendors::all()->paginate(10);
+        $vendors = \App\Vendors::all();
 
     } else {
-        $vendors = \App\User::find($user->id)->vendors()->paginate(10);
+        $vendors = \App\User::find($user->id)->vendors();
     }
     return view('vendors.index', compact('vendors'));
 
@@ -63,7 +63,7 @@ Route::post('/vendors/update', 'VendorsController@update');
 Route::get('/types', function () {
 
     $user = Auth::user();
-    $types = \App\Types::paginate(10);
+    $types = \App\Types::all();
     return view('types.index', compact('types'));
 
 })->name('types-list')->middleware('check-is-admin');
@@ -79,9 +79,12 @@ Route::post('/types/update', 'TypesController@update')->middleware('check-is-adm
 /** Users Routes */
 Route::get('/users', function () {
 
-    $users = \App\User::paginate(10);
+    $users = \App\User::all();
     return view('users.index', compact('users'));
 
 })->name('users-list')->middleware('check-is-admin');
 
 Route::post('/users/update-role', 'UserController@updateRole')->middleware('check-is-admin');
+Route::post('/users/update-is-active', 'UserController@updateIsActive')->middleware('check-is-admin');
+Route::post('/users/{id}/update', 'UserController@update')->middleware('check-is-admin');
+Route::get('/users/{id}/edit', 'UserController@edit')->middleware('check-is-admin');

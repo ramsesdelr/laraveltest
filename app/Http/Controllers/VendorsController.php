@@ -79,7 +79,7 @@ class VendorsController extends Controller
     }
 
     /**
-     * Store a new vendor
+     * Get the edit form for a vendor
      * @param $id
      * @return array $vendor
      */

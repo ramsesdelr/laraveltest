@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
 	<div class="row">
-		<table class="table table-responsive">
+		<table class="table table-responsive" id="example">
 			<caption>List of Types</caption>
 			<thead>
 				<tr>

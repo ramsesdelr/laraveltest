@@ -3,8 +3,13 @@
 @section('content')
 <div class="container">
 
+	@if(session('message'))
+	<div class="alert alert-success">
+		{{session('message')}}
+	</div>
+	@endif
 	<div align="right">
-		<a class="btn btn-info" href="users/create">Add New</a>
+		<!-- <a class="btn btn-info" href="users/create">Add New</a> -->
 	</div>
 
 	<div class="row">
@@ -25,8 +30,15 @@
 					<th scope="row"> {{$user->id}} </th>
 					<td> <a href="users/{{$user->id }}/edit/"> {{$user->name}} </a> </td>
 					<td>  {{$user->email}} </td>
-					<td>  <a  onclick="updateRole({{$user->id}})"> {{$user->is_admin}} </a> </td>
-					<td>  {{$user->is_active}} </td>
+					<td align="center">  
+						<a id="user-role-{{$user->id}}"  class="btn btn-info" onclick="updateRole({{$user->id}})">
+							{{$user->is_admin == 1 ? 'Admin' : 'Client'}}
+						  </a> 
+					</td>
+					<td align="center">  
+					<a id="user-active-{{$user->id}}" class="btn btn-info"  onclick="updateIsActive({{$user->id}})">{{$user->is_active == 1 ? 'Active' : 'Inactive'}}
+					</a>
+					</td>
 				</tr>
                 @endforeach
 			</tbody>
