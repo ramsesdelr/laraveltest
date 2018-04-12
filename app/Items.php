@@ -16,4 +16,13 @@ class Items extends Model
         'name', 'vendors_id', 'types_id', 'sku', 'release_date', 'price', 'weight', 'color','users_id','photo'
     ];
 
+    /**
+     * Get the vendor record associated with the item.
+     * 
+     */
+    public function vendor()
+    {
+        return $this->belongsTo('App\Vendors', 'vendors_id');
+    }
+
 }

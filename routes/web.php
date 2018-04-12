@@ -43,9 +43,8 @@ Route::get('/vendors', function () {
     $user = Auth::user();
     if ($user->is_admin == 1) {
         $vendors = \App\Vendors::all();
-
     } else {
-        $vendors = \App\User::find($user->id)->vendors();
+        $vendors = \App\User::find($user->id)->vendors()->get();
     }
     return view('vendors.index', compact('vendors'));
 

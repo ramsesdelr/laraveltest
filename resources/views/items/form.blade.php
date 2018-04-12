@@ -60,6 +60,7 @@
 				<input type="file" id="file" name="photo" class="custom-file-input">
 				<span class="custom-file-control"></span>
 			</label>
+			<input type="tags" data-role="tagsinput" name="tags">
            <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>

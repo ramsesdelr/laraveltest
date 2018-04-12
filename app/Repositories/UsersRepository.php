@@ -38,7 +38,9 @@ class UsersRepository
 
             $newPassword = \Hash::make($request['password']);
             if (\Hash::check($request['password_v'], $newPassword)) {
-                return User::find($id)->update($request);
+                $records = $request;
+                $records['password'] = $newPassword;
+                return User::find($id)->update($records);
             }
         } else {
             return User::find($id)->update([
