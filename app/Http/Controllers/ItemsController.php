@@ -58,11 +58,12 @@ class ItemsController extends Controller
         //we proceed to create the record from the repository
         try {
             $path = null;
-            $path = $vendorsRepo->uploadImage($request);
+            $path = $itemsRepo->uploadImage($request);
             $records = array_merge($request->all(), ['users_id' => $this->user->id, 'photo' => $path]);
             $itemsRepo->create($records);
 
         } catch (\Exception $e) {
+          
             Session::flash('message', $e->getMessage());
         }
 
@@ -106,13 +107,14 @@ class ItemsController extends Controller
 
         try {
             $records = $request->all();
+            
             if ($request->hasFile('photo')) {
                 $path = null;
                 $path = $itemsRepo->uploadImage($request);
                 $records = array_merge($request->all(), ['photo' => $path]);
             }
-            
             $itemsRepo->update(request('id'), $records);
+
             Session::flash('message', 'The Item was succesfully updated');
 
         } catch (\Exception $e) {

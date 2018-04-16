@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/tagify.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -28,15 +29,23 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Inventory Manager') }}
+                    <a class="navbar-brand" href="{{ url('home') }}">
+                        {{ config('app.name', 'Home') }}
+                    </a>
+                    <a class="navbar-brand" href="{{ url('items') }}">
+                        Items
+                    </a>
+                    <a class="navbar-brand" href="{{ url('vendors') }}">
+                        Vendors
+                    </a>
+                    <a class="navbar-brand" href="{{ url('types') }}">
+                        Types
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -82,6 +91,9 @@
 	</script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js">
 	</script>
+
+    <script src="{{ asset('js/jQuery.tagify.js') }}"></script>
+    <script src="{{ asset('js/canvasjs.min.js') }}"></script>
     
     <script>
         function updateRole(userId){
@@ -118,10 +130,24 @@
         });
         }
 
-        $(document).ready(function() {
-         
-             $('#example').DataTable();
-            });
+          
+
+        $(document).ready(function() { 
+            $('#example').DataTable();
+            
+            $('[name=tags]').tagify();
+            // Vanilla JavaScript
+            var input = document.querySelector('input[name=tags]'),
+            tagify = new Tagify( input );
+            $('[name=tags]').tagify({duplicates : false});
+
+            $('#update-item').click(()=>{
+                $('tag').each(function(index) {
+                    $('[name=tags]').val() += $(this).text() + ',';
+                });
+              });
+        });
     </script>
+    
 </body>
 </html>

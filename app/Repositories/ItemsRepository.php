@@ -20,6 +20,7 @@ class ItemsRepository
             'weight' => $request['weight'],
             'color' => $request['color'],
             'users_id' => $request['users_id'],
+            'tags' => $request['tags'],
             'photo' => $request['photo'],
         ]);
     }

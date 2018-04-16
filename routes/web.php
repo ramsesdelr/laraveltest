@@ -28,7 +28,7 @@ Route::get('/items', function () {
     if ($user->is_admin == 1) {
         $items = \App\Items::all();
     } else {
-        $items = \App\User::find($user->id)->items();
+        $items = \App\User::find($user->id)->items()->get();
     }
 
     return view('items.index', compact('items'));

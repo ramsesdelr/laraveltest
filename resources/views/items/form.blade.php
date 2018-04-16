@@ -55,14 +55,20 @@
 					<input type="date" name="release_date" class="form-control" id="release_date">
 				</div>
 			</div>
+			<div class="form-group row">
+				<label for="release_date" class="col-sm-2 col-form-label">Tags</label>
+				<div class="col-sm-10">
+					<input name="tags" placeholder="write some tags" >
+				</div>
+			</div>
 			<label class="custom-file">
 				<label for="release_date" class="col-sm-2 col-form-label">Photo</label>
 				<input type="file" id="file" name="photo" class="custom-file-input">
 				<span class="custom-file-control"></span>
 			</label>
-			<input type="tags" data-role="tagsinput" name="tags">
            <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
 </div>
+
 @endsection

@@ -36,7 +36,10 @@ class HomeController extends Controller
         $percentItemsPrice = Items::selectRaw('DISTINCT COUNT(items.id) as total, types.name as type_name')->leftJoin('types', 'items.types_id', '=', 'types.id')->groupBy('types.name')->get();
         $recentItems = Items::orderBy('id', 'DESC')->limit(5)->get(); 
         $latestItems = Items::orderBy('id', 'DESC')->limit(3)->get(); 
-
+        $dataPoints = [];
+        foreach ($percentItemsPrice as $item) {
+             $dataPoints[] = ['label'=> $item->type_name, 'y' => $item->total ];
+        }
         return view('home', [
                 'itemsCount' => $itemsCount,
                 'itemsAveragePrice' => $itemsAveragePrice,
@@ -44,6 +47,7 @@ class HomeController extends Controller
                 'recentItems' => $recentItems,
                 'latestItems' => $latestItems,
                 'user' => $this->user,
+                'dataPoints' => $dataPoints,
             ]);
     }
 }

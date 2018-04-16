@@ -58,6 +58,12 @@
 				</div>
 			</div>
 			<div class="form-group row">
+				<label for="release_date" class="col-sm-2 col-form-label">Tags</label>
+				<div class="col-sm-10">
+					<input name="tags" placeholder="write some tags" value="{{ $item->tags }}">
+				</div>
+			</div>
+			<div class="form-group row">
 				<label class="custom-file">
 					<label for="release_date" class="col-sm-6 col-form-label">Photo</label>
 					@if(file_exists('storage/'. $item->photo ) && $item->photo != null)
@@ -73,7 +79,7 @@
 			<div class="form-group row">
 				<div class="col-sm-10"></div>
 				<div class="col-sm-2">
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn-primary" id="update-item">Submit</button>
 				</div>
 			</div>
 		</form>

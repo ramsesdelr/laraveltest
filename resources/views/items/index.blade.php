@@ -7,7 +7,8 @@
 	</div>
 	@endif
 	<div class="row">
-		<table class="table table-responsive" id="example">
+		@include('errors')
+		<table class="table table-responsive table-striped table-bordered" id="example">
 			<caption>List of Items</caption>
 			<thead>
 				<tr>

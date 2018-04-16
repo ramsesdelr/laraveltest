@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -18,14 +17,7 @@
                         <h3> US$ {{$itemsAveragePrice}} </h3>
                     </div>
                      <div class="col-lg-4">
-                       <h4> Average Items per Category </h4>
-                            <ul>
-                                @foreach ($percentItemsPrice as $item)
-                                <li>
-                                    <b>{{ $item->type_name }}</b> - Qty: {{ $item->total }}
-                                </li>
-                                @endforeach
-                            </ul>
+                        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                     </div>
                     <div class="col-lg-12">
                        <h4> Last 5 Items </h4>
@@ -55,7 +47,7 @@
                                   
                                     </td>
                                     <td> ${{  $item->price }}</td>
-                                    <td>Tags</td>
+                                    <td>{{  $item->tags }}</td>
                                  </tr>
                                 @endforeach
                            </table>
@@ -78,4 +70,26 @@
         </div>
     </div>
 </div>
+
 @endsection
+
+<script type="text/javascript">
+    window.onload = function() {
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title: {
+            text: "Average Items per Category"
+        },
+        subtitles: [{
+            text: "November 2017"
+        }],
+        data: [{
+            type: "pie",
+            yValueFormatString: "#,##0.00\"%\"",
+            indexLabel: "{label} ({y})",
+            dataPoints: @php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); @endphp
+        }]
+    });
+    chart.render();  
+}
+</script>

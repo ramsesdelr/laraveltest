@@ -13,7 +13,7 @@ class Items extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'vendors_id', 'types_id', 'sku', 'release_date', 'price', 'weight', 'color','users_id','photo'
+        'name', 'vendors_id', 'types_id', 'sku', 'release_date', 'price', 'weight', 'color','users_id','photo','tags'
     ];
 
     /**
