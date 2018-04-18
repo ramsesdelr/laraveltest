@@ -79,6 +79,7 @@
 			<div class="form-group row">
 				<div class="col-sm-10"></div>
 				<div class="col-sm-2">
+					<a class="btn btn-primary" href="/items" role="button">Back</a>
 					<button type="submit" class="btn btn-primary" id="update-item">Submit</button>
 				</div>
 			</div>

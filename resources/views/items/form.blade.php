@@ -66,6 +66,7 @@
 				<input type="file" id="file" name="photo" class="custom-file-input">
 				<span class="custom-file-control"></span>
 			</label>
+			<a class="btn btn-primary" href="/items" role="button">Back</a>
            <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>

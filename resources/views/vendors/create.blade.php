@@ -14,6 +14,7 @@
 				<label for="vendor">Photo</label>
 				<input type="file" id="file" name="logo" class="custom-file-input">
 			</div>
+			<a class="btn btn-primary" href="/vendors" role="button">Back</a>
            <button type="submit" class="btn btn-primary">Create</button>
 		</form>
 	</div>

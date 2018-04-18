@@ -27,20 +27,21 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('home') }}">
-                        {{ config('app.name', 'Home') }}
-                    </a>
-                    <a class="navbar-brand" href="{{ url('items') }}">
-                        Items
-                    </a>
-                    <a class="navbar-brand" href="{{ url('vendors') }}">
-                        Vendors
-                    </a>
-                    <a class="navbar-brand" href="{{ url('types') }}">
-                        Types
-                    </a>
+                    @auth
+                        <!-- Branding Image -->
+                        <a class="navbar-brand" href="{{ url('home') }}">
+                            {{ config('app.name', 'Home') }}
+                        </a>
+                        <a class="navbar-brand" href="{{ url('items') }}">
+                            Items
+                        </a>
+                        <a class="navbar-brand" href="{{ url('vendors') }}">
+                            Vendors
+                        </a>
+                        <a class="navbar-brand" href="{{ url('types') }}">
+                            Types
+                        </a>
+                    @endauth
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">

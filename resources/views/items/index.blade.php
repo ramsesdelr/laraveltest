@@ -39,4 +39,4 @@
 		{{--  {{$items->links()}}  --}}
 	</div>
 </div>
-@endsection;
+@endsection
