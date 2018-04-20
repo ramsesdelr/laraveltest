@@ -60,6 +60,16 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                         <div class="form-group">
+                            <label for="password-confirm" class="col-md-4 control-label">User Level</label>
+
+                            <div class="col-md-6">
+                                <select name="is_admin"  class="form-control" required>
+                                    <option value="1">Admin</option>
+                                    <option value="0">User</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
