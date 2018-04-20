@@ -11,7 +11,7 @@ class VendorsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Vendors::class, 1)->create();
+        factory(App\Vendors::class, 5)->create();
         
     }
 }

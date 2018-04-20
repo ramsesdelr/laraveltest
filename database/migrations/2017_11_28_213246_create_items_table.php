@@ -25,7 +25,7 @@ class CreateItemsTable extends Migration
             $table->string('color', 10)->nullable();
             $table->date('release_date');
             $table->string('photo')->nullable();
-            $table->longtext('tags');
+            $table->longtext('tags')->nullable();
             $table->timestamps();
         });
     }
