@@ -38,13 +38,13 @@ class InstallProject extends Command
     public function handle()
     {
         echo "Checking folders... \n";
+        Artisan::call('storage:link');
         if(!is_dir(storage_path('app').'/public')) {
             mkdir(storage_path('app').'/public');
             mkdir(storage_path('app').'/public/vendors');
             mkdir(storage_path('app').'/public/items');
         }
         echo "Creating test data... please wait. \n";
-        Artisan::call('storage:link');
         Artisan::call('key:generate');
         Artisan::call('migrate:refresh', [
             '--seed' =>true,
